@@ -1,0 +1,84 @@
+"""
+Tarea práctica: Colecciones de datos - listas, conjuntos y diccionarios
+Autor: Mike Anderson Boza Aviles
+Problema de la vida real: Agenda de contactos
+"""
+
+# 1. COLECCIONES DE DATOS
+contactos = {
+    "Mike Boza": {"telefono": "0991234567", "categoria": "Trabajo"},
+    "Ana Torres": {"telefono": "0987654321", "categoria": "Familia"},
+    "Carlos Ruiz": {"telefono": "0961122334", "categoria": "Amigos"},
+    "Luisa Vera": {"telefono": "0998877665", "categoria": "Universidad"},
+    "Jorge Loor": {"telefono": "0983344556", "categoria": "Trabajo"}
+}
+
+historial_busquedas = [] # LISTA
+categorias = {"Trabajo", "Familia", "Amigos", "Universidad"} # CONJUNTO
+
+def agregar_contacto():
+    nombre = input("Nombre del contacto: ").strip()
+    telefono = input("Número telefónico: ").strip()
+    categoria = input("Categoría (Trabajo/Familia/Amigos/Universidad): ").strip() or "General"
+    contactos[nombre] = {"telefono": telefono, "categoria": categoria}
+    categorias.add(categoria)
+    print(f"✅ Contacto {nombre} agregado correctamente.")
+
+def buscar_contacto():
+    nombre = input("Nombre a buscar: ").strip()
+    historial_busquedas.append(nombre)
+    if nombre in contactos:
+        info = contactos[nombre]
+        print(f"🔎 Encontrado: {nombre} - Tel: {info['telefono']} - Cat: {info['categoria']}")
+    else:
+        print(f"❌ Contacto {nombre} no encontrado.")
+
+def eliminar_contacto():
+    nombre = input("Nombre a eliminar: ").strip()
+    if nombre in contactos:
+        del contactos[nombre]
+        print(f"🗑️ Contacto {nombre} eliminado.")
+    else:
+        print("❌ No existe ese contacto.")
+
+def mostrar_contactos():
+    print("\n=== LISTA DE CONTACTOS (Recorriendo diccionario) ===")
+    for nombre, datos in contactos.items():
+        print(f"- {nombre}: {datos['telefono']} [{datos['categoria']}]")
+
+def mostrar_categorias():
+    print("\n=== CATEGORÍAS ÚNICAS (Conjunto) ===")
+    for cat in categorias:
+        print(f"• {cat}")
+
+def mostrar_historial():
+    print("\n=== HISTORIAL DE BÚSQUEDAS (Lista) ===")
+    for i, nombre in enumerate(historial_busquedas, 1):
+        print(f"{i}. {nombre}")
+
+def menu():
+    while True:
+        print("""
+====== AGENDA DE CONTACTOS ======
+1. Agregar contacto
+2. Buscar contacto
+3. Eliminar contacto
+4. Mostrar todos los contactos
+5. Mostrar categorías
+6. Mostrar historial de búsquedas
+7. Salir
+
+""")
+        op = input("Elige una opción (1-7): ")
+        if op == "1": agregar_contacto()
+        elif op == "2": buscar_contacto()
+        elif op == "3": eliminar_contacto()
+        elif op == "4": mostrar_contactos()
+        elif op == "5": mostrar_categorias()
+        elif op == "6": mostrar_historial()
+        elif op == "7":
+            print("¡Tarea completada!")
+            break
+
+if __name__ == "__main__":
+    menu()
